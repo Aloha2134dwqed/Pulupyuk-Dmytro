@@ -1,74 +1,55 @@
-import itertools
-from itertools import count
+class Dmytro:
+    def __init__(self, first_name=None, last_name=None, birth_year=None):
+        self.first_name = first_name
+        self.last_name = last_name
+        self.birth_year = birth_year
 
-'''
-завдання дано список з елементами різних типів
-'''
+    def calculate_course(self):
+        if self.birth_year is None:
+            return None
+        current_year = 2025
+        age = current_year - self.birth_year
+        if 17 <= age <= 21:
+            return age - 15
+        return None
 
+    def get_name_list(self):
 
-
-
-
-
-
-
-
-
-bebra ="Hello World"
-name ="Dmytro"              #створюєм дані
-surname ="Pulupyuk"
-age =16
-
-print(bebra)
-print(name)
-print(surname) #Вивід в консоль
-print(age)
-
-print(type(name))
-print(type(surname))    #Визначеня типу
-print(type(age))
+        return [self.first_name, self.last_name] #повертає список
+        
 
 
-count_int = 0
-count_str = 0
-count_float = 0
-count_set = 0
-count_tuple = 0
-count_bool = 0
-count_list = 0
-count_notnull = []
-max_value = 0
-lst_notnull = []
-lst_count_types = [count_list, count_bool, count_set, count_float, count_tuple, count_str, count_int]
-lst = [name, surname, age]
-lst_name_type = [int, str, str, int, str, str]
-for item in lst:
-    if type(item) == int:
-        lst_count_types[-1] +=1
-    elif type(item) == str:
-        lst_count_types[-2] +=1
-    elif type(item) == tuple:
-        lst_count_types[-3] +=1
-    elif type(item) == float:
-        lst_count_types[-4] +=1
-    elif type(item) == set:
-        lst_count_types[-5] +=1
-    elif type(item) == bool:
-        lst_count_types[-6] +=1
-    elif type(item) == list:
-        lst_count_types[-7] +=1
-for item in lst_count_types:
-    if item !=0:
-        lst_notnull.append(item)
-    if len(lst_notnull) == 1:
-        print('Good')
-    else:
-        if item > max_value:
-            max_value = item
+def _generate_student_id():
+    import random
+    return f"ID-{random.randint(1000, 9999)}" #генерує ід студента 
 
-max_value = max(lst_count_types)
-inn = lst_count_types.index(max_value)
-print(lst_name_type[inn])
-for item in lst:
-    if type(item) !=lst_name_type[inn]:
-        lst.remove(item)
+
+class ExtendedDmytro(Dmytro):
+    def __init__(self, first_name=None, last_name=None, birth_year=None, university=None, faculty=None, specialty=None):
+        super().__init__(first_name, last_name, birth_year)
+        self.university = university
+        self.faculty = faculty
+        self.specialty = specialty
+        self._student_id = _generate_student_id() 
+
+    def get_full_info(self):
+        return {
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "birth_year": self.birth_year,
+            "university": self.university,
+            "faculty": self.faculty,
+            "specialty": self.specialty,
+            "student_id": self._student_id, #повна інформація про студента 
+        }
+
+    def is_graduated(self):
+        course = self.calculate_course()
+        return course is not None and course >= 4 #перевіряє чи студент навчається 
+
+
+student = ExtendedDmytro("Дмитро", "Пилипюк", 2007, "ЛНТУ", "ТФК", "Програмування")
+print(student.calculate_course())
+print(student.get_name_list())
+print(student.get_full_info())
+print(student.is_graduated())
